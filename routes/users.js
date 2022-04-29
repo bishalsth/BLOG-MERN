@@ -18,7 +18,7 @@ try{
 
     res.status(200).json(updateUser);
 }catch (err){
-    res.status(400).json(err);
+    res.status(500).json(err);
 }
 
     }else{
@@ -39,7 +39,7 @@ router.delete("/:id",async(req,res)=>{
         
     } catch (err) 
     {
-        res.status(400).json(err);
+        res.status(500).json(err);
         
     }
 } catch (err) {
@@ -48,6 +48,20 @@ router.delete("/:id",async(req,res)=>{
 } else{
     res.status(401).json("You can delete your account only");
 }
+
+});
+
+// GET
+router.get("/:id",async(req,res)=>{
+    try {
+        const user = await User.findById(req.params.id);
+        const{password, ...others} = user._doc;
+        res.status(200).json(others);
+        
+    } catch (err) {
+        res.status(500).json(err);
+        
+    }
 
 });
 
